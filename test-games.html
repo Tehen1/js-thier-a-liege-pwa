@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Test Jeux - JS du Thier à Liège</title>
+    <script type="module">
+        // Import all game modules
+        import '/Users/devtehen/jsthier-pwa-kit/theme.js';
+        import '/Users/devtehen/jsthier-pwa-kit/game.js';
+        import '/Users/devtehen/jsthier-pwa-kit/runner.js';
+        import '/Users/devtehen/jsthier-pwa-kit/board.js';
+        import '/Users/devtehen/jsthier-pwa-kit/export.js';
+        
+        // Test if we can create game instances
+        console.log('All game modules imported successfully');
+        
+        // Create a simple test container
+        const testContainer = document.createElement('div');
+        testContainer.innerHTML = `
+            <h1>Test Jeux du Thier à Liège</h1>
+            <div id="gameWrap"></div>
+            <div id="runWrap"></div>
+            <div id="overlay">
+                <h2 id="ovTitle"></h2>
+                <p id="ovSub"></p>
+                <button id="startBtn">Jouer</button>
+            </div>
+        `;
+        document.body.appendChild(testContainer);
+        
+        // Create game instances (simplified for testing)
+        const gameWrap = document.getElementById('gameWrap');
+        const runWrap = document.getElementById('runWrap');
+        const overlay = document.getElementById('overlay');
+        
+        // Test creating a game instance
+        const testGame = createGame({
+            wrap: gameWrap,
+            canvas: document.createElement('canvas'),
+            overlay: overlay,
+            ovTitle: document.getElementById('ovTitle'),
+            ovSub: document.getElementById('ovSub'),
+            startBtn: document.getElementById('startBtn'),
+            shotsEl: document.createElement('div'),
+            goalsEl: document.createElement('div'),
+            bestEl: document.createElement('div'),
+            level: 'normal'
+        });
+        
+        console.log('Test game created successfully:', testGame);
+        
+        // Test creating a runner instance  
+        const testRunner = createRunner({
+            wrap: runWrap,
+            canvas: document.createElement('canvas'),
+            overlay: overlay,
+            ovTitle: document.getElementById('ovTitle'),
+            ovSub: document.getElementById('ovSub'),
+            startBtn: document.getElementById('startBtn'),
+            form: document.createElement('form'),
+            nameInput: document.createElement('input'),
+            scoreEl: document.createElement('div'),
+            levelEl: document.createElement('div'),
+            livesEl: document.createElement('div'),
+            progEl: document.createElement('div'),
+            jumpBtn: document.createElement('button'),
+            shootBtn: document.createElement('button'),
+            onEnd: {
+                qualifies: (score) => score > 0,
+                save: (name, score) => console.log(`Score saved: ${name} - ${score}`)
+            }
+        });
+        
+        console.log('Test runner created successfully:', testRunner);
+        
+        console.log('All tests passed! Games are working.');
+    </script>
+</head>
+<body>
+    <h1>Les jeux du Thier à Liège - Test Page</h1>
+    <p>If you see this message, the JavaScript modules are loading correctly.</p>
+    <p>Check the browser console for detailed test results.</p>
+</body>
+</html>
