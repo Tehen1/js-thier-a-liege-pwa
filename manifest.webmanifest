@@ -1,0 +1,29 @@
+{
+  "id": "./",
+  "name": "JS du Thier à Liège",
+  "short_name": "JS Thier",
+  "description": "Club de football de quartier à Thier-à-Liège : équipes, matchs, inscriptions, chèques-sport et mini-jeux.",
+  "lang": "fr-BE",
+  "dir": "ltr",
+  "start_url": "./?source=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "theme_color": "#1a2a5e",
+  "background_color": "#1a2a5e",
+  "categories": ["sports", "kids", "lifestyle"],
+  "prefer_related_applications": false,
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "images/crest.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icons/maskable.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Inscrire mon enfant", "short_name": "Inscription", "url": "./?source=pwa#inscriptions", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Prochains matchs", "short_name": "Matchs", "url": "./?source=pwa#terrain", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Les jeux du Thier", "short_name": "Jeux", "url": "./?source=pwa#jeu", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] }
+  ]
+}

@@ -1,0 +1,6 @@
+# Contact sécurité de la JS du Thier à Liège (RFC 9116)
+# À COMPLÉTER : remplacer l'adresse par une vraie adresse du club, et l'URL par le domaine final.
+Contact: mailto:contact@jsthier.be
+Expires: 2027-10-29T00:00:00.000Z
+Preferred-Languages: fr, en
+Canonical: https://jsthier.be/.well-known/security.txt

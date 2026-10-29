@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- icône « maskable » : fond plein, blason dans la zone de sécurité centrale (80 %) -->
+  <rect width="512" height="512" fill="#1a2a5e"/>
+  <circle cx="256" cy="256" r="232" fill="#f6d327" opacity=".12"/>
+  <g transform="translate(116 96) scale(.92)">
+  <defs>
+    <linearGradient id="silver" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".45" stop-color="#e3e7ec"/>
+      <stop offset=".55" stop-color="#c9d0d8"/>
+      <stop offset="1" stop-color="#eef1f4"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffe45c"/>
+      <stop offset="1" stop-color="#f2c414"/>
+    </linearGradient>
+    <linearGradient id="blade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#9aa4b0"/>
+      <stop offset=".5" stop-color="#f6f8fa"/>
+      <stop offset="1" stop-color="#b5bec8"/>
+    </linearGradient>
+    <radialGradient id="grape" cx=".35" cy=".3" r=".75">
+      <stop offset="0" stop-color="#4a5d9c"/>
+      <stop offset=".6" stop-color="#1a2a5e"/>
+      <stop offset="1" stop-color="#0f1a3f"/>
+    </radialGradient>
+    <clipPath id="shieldClip">
+      <path d="M26 30 H274 V168 C274 256 214 304 150 330 C86 304 26 256 26 168 Z"/>
+    </clipPath>
+    <g id="serpette">
+      <!-- manche en bois foncé + virole + lame courbe -->
+      <path d="M78 266 L94 210" stroke="#0f1a3f" stroke-width="15" stroke-linecap="round"/>
+      <path d="M79 262 L93 214" stroke="#3b4f8a" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+      <rect x="86" y="200" width="18" height="10" rx="3" transform="rotate(16 95 205)" fill="#c9d0d8" stroke="#0f1a3f" stroke-width="3"/>
+      <path d="M90 202 C80 160 84 118 110 94 C118 87 128 92 122 101 C104 124 101 162 104 200 Z" fill="url(#blade)" stroke="#0f1a3f" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M96 190 C92 156 96 124 112 104" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".9"/>
+    </g>
+  </defs>
+
+  <!-- bouclier argenté -->
+  <path d="M26 30 H274 V168 C274 256 214 304 150 330 C86 304 26 256 26 168 Z" fill="url(#silver)" stroke="#1a2a5e" stroke-width="10" stroke-linejoin="round"/>
+  <g clip-path="url(#shieldClip)">
+    <path d="M26 30 L274 30 L26 220 Z" fill="#fff" opacity=".35"/>
+  </g>
+  <path d="M42 44 H258 V168 C258 246 205 289 150 312 C95 289 42 246 42 168 Z" fill="none" stroke="#1a2a5e" stroke-width="2" opacity=".55"/>
+
+  <!-- ovale jaune -->
+  <ellipse cx="150" cy="162" rx="92" ry="112" fill="url(#gold)" stroke="#1a2a5e" stroke-width="6"/>
+  <ellipse cx="150" cy="162" rx="82" ry="102" fill="none" stroke="#1a2a5e" stroke-width="1.5" opacity=".5"/>
+
+  <!-- serpettes croisées de part et d'autre -->
+  <use href="#serpette"/>
+  <use href="#serpette" transform="translate(300 0) scale(-1 1)"/>
+
+  <!-- grappe -->
+  <path d="M150 106 C150 94 156 86 166 82" fill="none" stroke="#0f1a3f" stroke-width="5" stroke-linecap="round"/>
+  <path d="M154 96 C164 80 186 80 192 92 C180 92 170 100 154 96 Z" fill="#1a2a5e"/>
+  <path d="M158 95 C168 88 178 87 186 90" fill="none" stroke="#f2c414" stroke-width="1.5" opacity=".8"/>
+  <g fill="url(#grape)" stroke="#0f1a3f" stroke-width="1.5">
+    <circle cx="128" cy="116" r="11.5"/><circle cx="150" cy="114" r="11.5"/><circle cx="172" cy="116" r="11.5"/>
+    <circle cx="117" cy="136" r="11.5"/><circle cx="139" cy="135" r="11.5"/><circle cx="161" cy="135" r="11.5"/><circle cx="183" cy="136" r="11.5"/>
+    <circle cx="128" cy="156" r="11.5"/><circle cx="150" cy="155" r="11.5"/><circle cx="172" cy="156" r="11.5"/>
+    <circle cx="139" cy="175" r="11.5"/><circle cx="161" cy="175" r="11.5"/>
+    <circle cx="150" cy="194" r="11.5"/>
+  </g>
+  <g fill="#fff" opacity=".55">
+    <circle cx="124" cy="112" r="3"/><circle cx="146" cy="110" r="3"/><circle cx="168" cy="112" r="3"/>
+    <circle cx="113" cy="132" r="3"/><circle cx="135" cy="131" r="3"/><circle cx="157" cy="131" r="3"/><circle cx="179" cy="132" r="3"/>
+    <circle cx="124" cy="152" r="3"/><circle cx="146" cy="151" r="3"/><circle cx="168" cy="152" r="3"/>
+    <circle cx="135" cy="171" r="3"/><circle cx="157" cy="171" r="3"/><circle cx="146" cy="190" r="3"/>
+  </g>
+
+  <!-- année -->
+  <text x="150" y="252" text-anchor="middle" font-family="Iowan Old Style, Palatino, Georgia, serif" font-weight="700" font-size="34" letter-spacing="3" fill="#1a2a5e">1906</text>
+  <path d="M112 262 H188" stroke="#1a2a5e" stroke-width="2" opacity=".6"/>
+  </g>
+</svg>

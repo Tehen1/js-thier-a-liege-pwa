@@ -1,0 +1,9 @@
+name = "jsthier-pwa-worker"
+compatibility_date = "2024-01-01"
+compatibility_flags = []
+
+[env.production]
+workers_dev = true
+
+[build]
+command = "echo 'Worker build complete'"
