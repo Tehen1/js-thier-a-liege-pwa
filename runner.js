@@ -239,7 +239,14 @@ export function createRunner(el) {
   function hud() {
     scoreEl.textContent = Math.floor(S.score);
     levelEl.textContent = S.level;
-    livesEl.innerHTML = Array.from({ length: LIVES }, (_, i) => `<i class="${i < S.lives ? 'on' : ''}"></i>`).join('');
+    // Clear existing lives first
+    livesEl.innerHTML = '';
+    // Create life indicators safely using createElement
+    for (let i = 0; i < LIVES; i++) {
+      const li = document.createElement('i');
+      li.className = i < S.lives ? 'on' : '';
+      livesEl.appendChild(li);
+    }
     progEl.style.width = `${((S.dist % LEVEL_M) / LEVEL_M) * 100}%`;
   }
 

@@ -172,7 +172,14 @@ export function createGame(el) {
 
   const goals = () => results.filter(r => r === 'goal').length;
   function renderHud() {
-    shotsEl.innerHTML = Array.from({ length: SHOTS }, (_, i) => `<i class="${results[i] || ''}"></i>`).join('');
+    // Clear existing shots
+    shotsEl.innerHTML = '';
+    // Create shot indicators safely using createElement
+    for (let i = 0; i < SHOTS; i++) {
+      const li = document.createElement('i');
+      li.className = results[i] || '';
+      shotsEl.appendChild(li);
+    }
     goalsEl.textContent = goals();
   }
   renderHud();
