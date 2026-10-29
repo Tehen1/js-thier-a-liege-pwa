@@ -1,0 +1,9 @@
+{
+  "project": "js-thier-a-liege-pwa",
+  "version": "2.0.0",
+  "description": "Complete PWA deployment with original js_thier_pwa restoration and enhanced export functionality",
+  "features": ["theme-toggle", "penalty-game", "runner-game", "export-functionality", "offline-support", "service-worker"],
+  "csp-compliant": true,
+  "deployment-date": "2026-10-29",
+  "author": "tehen1"
+}
