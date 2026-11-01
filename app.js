@@ -291,9 +291,17 @@ function initGames() {
   const load = () => {
     if (started) return;
     started = true;
+    console.log('Loading games modules...');
     Promise.all([import('./game.js'), import('./runner.js'), import('./board.js')])
-      .then((mods) => setupGames(...mods))
-      .catch((err) => console.error('Jeux', err));
+      .then((mods) => {
+        console.log('Games modules loaded successfully:', mods);
+        setupGames(...mods);
+        console.log('Games initialized successfully');
+      })
+      .catch((err) => {
+        console.error('Jeux', err);
+        console.error('Error loading games:', err);
+      });
   };
   if (!('IntersectionObserver' in window) || location.hash === '#jeu') return load();
   const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { io.disconnect(); load(); } }, { rootMargin: '800px 0px' });
