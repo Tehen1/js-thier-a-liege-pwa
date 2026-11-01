@@ -292,7 +292,11 @@ function initGames() {
     if (started) return;
     started = true;
     console.log('Loading games modules...');
-    Promise.all([import('./game.js'), import('./runner.js'), import('./board.js')])
+    Promise.all([
+      import('./game.js'), 
+      import('./runner.js'), 
+      import('./board.js')
+    ])
       .then((mods) => {
         console.log('Games modules loaded successfully:', mods);
         setupGames(...mods);
