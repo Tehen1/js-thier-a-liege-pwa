@@ -20,9 +20,6 @@
       "outputs": []
     },
     "build": {
-      "tags": [
-        "ci"
-      ],
       "dependsOn": [
         "typecheck",
         "lint",
