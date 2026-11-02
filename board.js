@@ -44,6 +44,13 @@ export function createBoard({ key, listEl, unit = 'pts', onRender }) {
   return { qualifies, add, render };
 }
 
-function escape(s) {
-  return s.replace(/[&<>"']/g, c => ({ '&': '&', '<': '<', '>': '>', '"': '"', "'": ''' }[c]));
+function escape(value) {
+  const entities = new Map([
+    ['&', '&amp;'],
+    ['<', '&lt;'],
+    ['>', '&gt;'],
+    ['"', '&quot;'],
+    ["'", '&#39;'],
+  ]);
+  return String(value).replace(/[&<>"']/g, (char) => entities.get(char));
 }
