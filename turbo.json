@@ -1,0 +1,37 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "typecheck": {
+      "tags": [
+        "ci"
+      ],
+      "outputs": []
+    },
+    "lint": {
+      "tags": [
+        "ci"
+      ],
+      "outputs": []
+    },
+    "test": {
+      "tags": [
+        "ci"
+      ],
+      "outputs": []
+    },
+    "build": {
+      "tags": [
+        "ci"
+      ],
+      "dependsOn": [
+        "typecheck",
+        "lint",
+        "test"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**"
+      ]
+    }
+  }
+}

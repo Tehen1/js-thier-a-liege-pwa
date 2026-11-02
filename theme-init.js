@@ -1,6 +1,0 @@
-(function() {
-  let t = null;
-  try { t = localStorage.getItem('jsthier-theme'); } catch {}
-  if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  document.documentElement.dataset.theme = t;
-})();

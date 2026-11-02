@@ -1,2 +1,16 @@
-.vercel
-.env*
+# Generated Next.js app / local artifacts
+node_modules/
+.next/
+out/
+.vercel/
+.turbo/
+.env
+.env.*
+!.env.example
+.DS_Store
+*.tsbuildinfo
+*.bak
+*.log
+venv/
+.venv/
+__pycache__/
