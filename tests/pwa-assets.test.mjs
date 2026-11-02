@@ -51,8 +51,9 @@ test('Service Worker precache resolves to real static files', () => {
 test('Turborepo gates build on static quality tasks', () => {
   const config = JSON.parse(read('turbo.json'));
   const tasks = config.tasks;
-  for (const name of ['typecheck', 'lint', 'test', 'build']) {
+  for (const name of ['typecheck', 'lint', 'test']) {
     assert.ok(tasks[name]?.tags?.includes('ci'), `Missing ci tag: ${name}`);
   }
+  assert.ok(!tasks.build?.tags?.includes('ci'), 'Build is not an initial Vercel CI task');
   assert.deepEqual([...tasks.build.dependsOn].sort(), ['lint', 'test', 'typecheck']);
 });
