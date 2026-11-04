@@ -782,3 +782,55 @@
 .slide.slide-poster figcaption span {
   font-size: clamp(1rem, 2vw, 1.2rem);
 }
+
+/* Mobile-first game stage: keep gameplay ahead of instructions. */
+@layer layout {
+  .sec.game {
+    max-inline-size: 1600px;
+    padding-inline: clamp(10px, 3vw, 40px);
+  }
+
+  .game-layout { gap: clamp(14px, 2.5vw, 32px); }
+
+  @media (min-width: 1100px) {
+    .game-layout { grid-template-columns: minmax(0, 1fr) 240px; }
+  }
+}
+
+@layer games {
+  .game-pane {
+    display: flex;
+    flex-direction: column;
+    min-inline-size: 0;
+  }
+
+  .game-shell { order: 0; min-inline-size: 0; }
+  .game-pane > .rules { order: 1; margin-block-start: 18px; }
+  .game-wrap {
+    block-size: clamp(390px, 76dvh, 780px);
+  }
+  .runner-wrap {
+    block-size: clamp(360px, 72dvh, 740px);
+  }
+
+  @media (max-width: 599px) {
+    .game-hud { gap: 8px; padding: 10px 12px; }
+    .game-tabs { gap: 8px; }
+    .gtab { gap: 8px; padding: 10px; }
+    .gtab-txt b { font-size: 19px; }
+    .pad-btn { min-block-size: 72px; }
+    .game-pane > .rules { margin-block-start: 14px; }
+  }
+
+  @media (orientation: landscape) and (max-height: 500px) {
+    .game-wrap, .runner-wrap { block-size: max(260px, 86dvh); }
+  }
+
+  @supports not (height: 100dvh) {
+    .game-wrap { block-size: clamp(390px, 76vh, 780px); }
+    .runner-wrap { block-size: clamp(360px, 72vh, 740px); }
+    @media (orientation: landscape) and (max-height: 500px) {
+      .game-wrap, .runner-wrap { block-size: max(260px, 86vh); }
+    }
+  }
+}
