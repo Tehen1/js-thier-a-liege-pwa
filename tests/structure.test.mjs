@@ -20,3 +20,23 @@ test('does not ship legacy HTML script tags in JSX', () => {
   assert.doesNotMatch(read('components/ClubMarkup.tsx'), /<script\b/);
   assert.doesNotMatch(read('components/ClubMarkup.tsx'), /dangerouslySetInnerHTML/);
 });
+
+test('renders larger mobile-first game stages without installation UI', () => {
+  const markup = read('components/ClubMarkup.tsx');
+  const css = read('app/globals.css');
+  const pwa = read('public/pwa.js');
+
+  assert.match(markup, /id="runWrap"/);
+  assert.match(markup, /id="gameWrap"/);
+  assert.match(markup, /id="rJump"/);
+  assert.match(markup, /id="rShoot"/);
+  assert.doesNotMatch(markup, /id="installBtn"|id="installFoot"/);
+  assert.doesNotMatch(pwa, /beforeinstallprompt|initInstall/);
+
+  assert.match(css, /\.sec\.game\s*\{[^}]*max-inline-size:\s*1600px/s);
+  assert.match(css, /\.game-shell\s*\{\s*order:\s*0/);
+  assert.match(css, /\.game-pane\s*>\s*\.rules\s*\{\s*order:\s*1/);
+  assert.match(css, /block-size:\s*clamp\(390px,\s*76dvh,\s*780px\)/);
+  assert.match(css, /block-size:\s*clamp\(360px,\s*72dvh,\s*740px\)/);
+  assert.match(pwa, /initServiceWorker\(\)/);
+});
