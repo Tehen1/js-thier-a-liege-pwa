@@ -1,8 +1,6 @@
-// Application installable : service worker, bouton « Installer », aide iPhone,
-// mise à jour disponible et état hors ligne.
+// PWA service worker, update notifications, and offline status.
 const $ = (id) => document.getElementById(id);
 const isStandalone = () => navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
-const isIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
 function toast(text, action) {
   let el = $('pwaToast');
@@ -71,40 +69,6 @@ function initServiceWorker() {
   else window.addEventListener('load', () => { void register(); }, { once: true });
 }
 
-function initInstall() {
-  const buttons = [$('installBtn'), $('installFoot')].filter(Boolean);
-  if (isStandalone()) return; // déjà installée
-  let deferred = null;
-
-  // Android / Chrome / Edge : le navigateur propose l'installation
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferred = e;
-    buttons.forEach((b) => { b.hidden = false; });
-  });
-  window.addEventListener('appinstalled', () => {
-    deferred = null;
-    buttons.forEach((b) => { b.hidden = true; });
-    toast('Application installée. Retrouvez-la sur votre écran d’accueil.');
-  });
-
-  // iPhone / iPad : pas d'invite automatique, on explique le geste
-  if (isIOS()) buttons.forEach((b) => { b.hidden = false; });
-
-  buttons.forEach((b) => b.addEventListener('click', async () => {
-    if (deferred) {
-      deferred.prompt();
-      await deferred.userChoice.catch(() => null);
-      deferred = null;
-      return;
-    }
-    if (isIOS()) {
-      toast('Sur iPhone : touchez Partager (carré avec une flèche), puis « Sur l’écran d’accueil ».');
-    } else {
-      toast('Ouvrez le menu du navigateur puis « Installer l’application » ou « Ajouter à l’écran d’accueil ».');
-    }
-  }));
-}
 
 function initNetwork() {
   const set = () => document.documentElement.toggleAttribute('data-offline', !navigator.onLine);
@@ -115,7 +79,6 @@ function initNetwork() {
 
 export function initPwa() {
   initServiceWorker();
-  initInstall();
   initNetwork();
   if (isStandalone()) document.documentElement.setAttribute('data-standalone-app', '');
 }
