@@ -1,5 +1,4 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
-import { join } from 'node:path';
 
 const dist = new URL('../dist/', import.meta.url);
 const files = readdirSync(dist).filter((name) => /^sw(?:-[a-z0-9-]+)?\.js$/i.test(name));
