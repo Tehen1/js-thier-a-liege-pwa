@@ -9,7 +9,7 @@ const exists = (file) => existsSync(resolve(root, file));
 
 test('Astro source and legacy game modules exist', () => {
   for (const file of [
-    'src/layouts/Base.astro', 'src/pages/index.astro', 'components/ClubMarkup.tsx',
+    'src/layouts/Base.astro', 'src/pages/index.astro', 'src/components/ClubMarkup.tsx',
     'public/sw.js', 'public/manifest.webmanifest',
     'public/game.js', 'public/runner.js', 'public/board.js',
   ]) {

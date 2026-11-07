@@ -9,5 +9,5 @@ export default defineConfig([
   ...astro.configs.recommended,
   { files: ['**/*.mjs'], languageOptions: { globals: { URL: 'readonly', console: 'readonly' } } },
   // Browser-only legacy ES modules are served untouched from public/.
-  globalIgnores(['public/**', 'reference/**', 'dist/**', '.astro/**']),
+  globalIgnores(['public/**', 'reference/**', 'dist/**', '.astro/**', 'sw.js', 'workbox-*.js']),
 ]);

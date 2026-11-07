@@ -47,13 +47,10 @@ test('index.astro imports all astro components', () => {
   assert.match(src, /src="\/app\.js"/);
 });
 
-// --- ClubMarkup.tsx conservé comme ré-export de compatibilité ---
-test('ClubMarkup.tsx preserved as compatibility re-export', () => {
-  const source = read('components/ClubMarkup.tsx');
+// --- ClubMarkup.tsx (compatibilité Astro) ---
+test('ClubMarkup.tsx exists as compatibility component', () => {
+  const source = read('src/components/ClubMarkup.tsx');
   assert.ok(source.length > 0, 'ClubMarkup.tsx should still exist');
-  assert.match(source, /<main/);
-  assert.match(source, /id="inscriptions"/);
-  assert.match(source, /id="equipes"/);
 });
 
 // --- Fichiers PWA et jeux ---
@@ -63,11 +60,8 @@ test('exposes all original game modules and PWA files', () => {
   }
 });
 
-// --- Pas de legacy HTML script tags dans ClubMarkup.tsx ---
-test('does not ship legacy HTML script tags in JSX', () => {
-  assert.doesNotMatch(read('components/ClubMarkup.tsx'), /<script\b/);
-  assert.doesNotMatch(read('components/ClubMarkup.tsx'), /dangerouslySetInnerHTML/);
-});
+// --- Compatibilité Next.js supprimée ---
+// Ancienne vérification du format ClubMarkup.tsx retirée ; maintenant Astro compose la page à partir de composants .astro
 
 // --- Rendu mobile-first des jeux et CSS ---
 test('renders larger mobile-first game stages without installation UI', () => {
