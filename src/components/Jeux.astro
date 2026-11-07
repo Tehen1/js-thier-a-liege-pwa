@@ -1,0 +1,235 @@
+---
+// Section Jeux du Thier (extrait de ClubMarkup.tsx)
+// Les moteurs de jeux (~65 Ko) sont chargés à la demande par initGames() dans /app.js
+// lorsqu'on approche de cette section. Ce composant ne rend que le shell statique.
+---
+<section id="jeu" class="sec game">
+  <header class="sec-head">
+    <span class="num">V</span>
+    <h2>Les jeux du Thier</h2>
+  </header>
+
+  <p class="game-lede">Deux mini-jeux aux couleurs du club. Battez le record, entrez dans le top 3, défiez les copains de l'équipe.</p>
+
+  <div class="game-tabs" role="tablist" aria-label="Choisir un jeu">
+    <button class="gtab" type="button" data-mode="runner" role="tab" aria-controls="paneRunner" aria-selected="true">
+      <span class="gtab-ico" aria-hidden="true">⚡</span>
+      <span class="gtab-txt"><b>Runner</b><small>Dribble, saute, tire</small></span>
+      <span class="gtab-rec">Record<em id="recRunner">—</em></span>
+    </button>
+    <button class="gtab" type="button" data-mode="penalty" role="tab" aria-controls="panePenalty" aria-selected="false">
+      <span class="gtab-ico" aria-hidden="true">🥅</span>
+      <span class="gtab-txt"><b>Tirs au but</b><small>5 tirs · 3 niveaux</small></span>
+      <span class="gtab-rec">Record<em id="recPenalty">—</em></span>
+    </button>
+  </div>
+
+  <div class="game-layout">
+    <div class="game-pane" id="paneRunner" role="tabpanel" data-pane="runner">
+      <ul class="rules">
+        <li class="r-bad"><i>−</i><b>Tacle</b><span>Sautez par-dessus. Touché : une vie en moins.</span></li>
+        <li class="r-good"><i>+</i><b>Ballon</b><span>Tirez dedans : 50 pts × niveau.</span></li>
+        <li class="r-gold"><i>★</i><b>Ballon doré</b><span>Rare : 150 pts × niveau.</span></li>
+        <li class="r-lvl"><i>↑</i><b>Niveau</b><span>Tous les 220 m : plus vite, plus de tacles.</span></li>
+      </ul>
+      <div class="game-shell">
+        <div class="game-hud">
+          <div class="lives" id="rLives" aria-label="Vies"></div>
+          <div class="score" aria-live="polite"><span id="rScore">0</span><small>points</small></div>
+          <div class="best">Niveau <b id="rLevel">1</b></div>
+        </div>
+        <div class="prog" aria-label="Progression vers le niveau suivant"><i id="rProg"></i></div>
+        <div class="game-wrap runner-wrap" id="runWrap">
+          <canvas id="runner" role="img" aria-label="Mini-jeu runner : le joueur de la JS dribble, saute les tacles et tire dans les ballons"></canvas>
+          <div class="game-overlay" id="rOverlay">
+            <img src="/images/crest.svg" alt="" class="ov-crest" width="72" height="84" loading="lazy" decoding="async" />
+            <p class="ov-title" id="rTitle">Coup d'envoi</p>
+            <div class="ov-sub" id="rSub">
+              <div class="keys">
+                <span><kbd>Espace</kbd><kbd>↑</kbd> sauter</span>
+                <span><kbd>X</kbd><kbd>→</kbd> tirer</span>
+              </div>
+              <small class="touch-hint">Sur téléphone : touchez à gauche pour sauter, à droite pour tirer.</small>
+            </div>
+            <form class="pseudo" id="rForm" hidden>
+              <label for="rName">Nouveau top 3 ! Votre pseudo :</label>
+              <div><input id="rName" maxlength="12" autocomplete="off" placeholder="ex. Olive10" required /><button class="btn btn-yellow" type="submit">Enregistrer</button></div>
+              <button type="button" class="skip" data-skip="r">Passer</button>
+            </form>
+            <button type="button" class="btn btn-yellow" id="rStart">Jouer</button>
+          </div>
+        </div>
+        <div class="pad">
+          <button type="button" id="rJump" class="pad-btn">⤒ Saut</button>
+          <button type="button" id="rShoot" class="pad-btn pad-shoot">Tir ⚽</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-pane" id="panePenalty" role="tabpanel" data-pane="penalty" hidden>
+      <ul class="rules rules-3">
+        <li class="r-good"><i>◎</i><b>Visez</b><span>Déplacez la cible dans le but.</span></li>
+        <li class="r-gold"><i>⚽</i><b>Frappez</b><span>Cliquez ou touchez pour tirer.</span></li>
+        <li class="r-bad"><i>!</i><b>Risque</b><span>Près des poteaux : dur à arrêter, mais facile à rater.</span></li>
+      </ul>
+      <div class="game-shell">
+        <div class="game-hud">
+          <div class="shots" id="shots"></div>
+          <div class="score"><span id="goals">0</span><small>buts</small></div>
+          <div class="best"><span class="lvl-badge" id="pLvlBadge">Normal</span> Record <b id="best">0</b><span>/5</span></div>
+        </div>
+        <div class="game-wrap" id="gameWrap">
+          <canvas id="game" role="img" aria-label="Mini-jeu de tirs au but face au gardien du Thier"></canvas>
+          <div class="game-overlay" id="overlay">
+            <img src="/images/crest.svg" alt="" class="ov-crest" width="72" height="84" loading="lazy" decoding="async" />
+            <p class="ov-title" id="ovTitle">À vous de tirer</p>
+            <p class="ov-sub" id="ovSub">5 tirs · visez et cliquez</p>
+            <fieldset class="lvl-pick" id="pLevel">
+              <legend>Niveau du gardien</legend>
+              <label><input type="radio" name="plevel" value="facile" /><span>Facile<small>Gardien lent</small></span></label>
+              <label><input type="radio" name="plevel" value="normal" defaultChecked /><span>Normal<small>Équilibré</small></span></label>
+              <label><input type="radio" name="plevel" value="pro" /><span>Pro<small>Il lit vos tirs</small></span></label>
+            </fieldset>
+            <form class="pseudo" id="pForm" hidden>
+              <label for="pName">Nouveau top 3 ! Votre pseudo :</label>
+              <div><input id="pName" maxlength="12" autocomplete="off" placeholder="ex. Tom9" required /><button class="btn btn-yellow" type="submit">Enregistrer</button></div>
+              <button type="button" class="skip" data-skip="p">Passer</button>
+            </form>
+            <button type="button" class="btn btn-yellow" id="startBtn">Commencer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="podium">
+      <div class="podium-head">
+        <p class="tag">Top 3</p>
+        <h3 id="boardTitle">Runner</h3>
+      </div>
+      <ol class="pod-list" id="boardRunner"></ol>
+      <ol class="pod-list" id="boardPenalty" hidden></ol>
+      <p class="pod-goal" id="podGoal"></p>
+      <p class="small">Scores enregistrés sur cet appareil.</p>
+    </aside>
+  </div>
+</section>
+
+<script client:visible>
+  const $ = (id) => document.getElementById(id);
+  const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
+
+  const [gameMod, runnerMod, boardMod] = await Promise.all([
+    import('/game.js'),
+    import('/runner.js'),
+    import('/board.js'),
+  ]);
+
+  const { createGame, LEVELS } = gameMod;
+  const { createRunner } = runnerMod;
+  const { createBoard } = boardMod;
+
+  let mode = 'runner';
+  const tops = { runner: [], penalty: [] };
+
+  const showGoal = () => {
+    const list = tops[mode];
+    const unit = mode === 'runner' ? 'pts' : 'buts';
+    const free = 3 - list.length;
+    const el = $('podGoal');
+    if (!list.length) el.innerHTML = 'Personne au classement : la première place est libre.';
+    else if (free > 0) el.innerHTML = `Encore ${free} place${free > 1 ? 's' : ''} libre${free > 1 ? 's' : ''} sur le podium.`;
+    else el.innerHTML = `À battre pour entrer : <b>${list[2].score + 1} ${unit}</b>`;
+  };
+
+  const onBoard = (m, recId, unit) => (list) => {
+    tops[m] = list;
+    const el = $(recId);
+    el.textContent = list[0] ? `${list[0].score} ${unit}` : '—';
+    if (m === mode) showGoal();
+  };
+
+  const boardRunner = createBoard({ key: 'jsthier-top-runner', listEl: $('boardRunner'), unit: 'pts', onRender: onBoard('runner', 'recRunner', 'pts') });
+
+  const penaltyBoards = Object.fromEntries(Object.keys(LEVELS).map(lv => [lv, createBoard({
+    key: lv === 'normal' ? 'jsthier-top-penalty' : `jsthier-top-penalty-${lv}`,
+    listEl: $('boardPenalty'), unit: 'buts',
+    onRender: onBoard('penalty', 'recPenalty', '/ 5'),
+  })]));
+
+  let boardPenalty = penaltyBoards.normal;
+
+  const runner = createRunner({
+    wrap: $('runWrap'), canvas: $('runner'),
+    overlay: $('rOverlay'), ovTitle: $('rTitle'), ovSub: $('rSub'), startBtn: $('rStart'),
+    form: $('rForm'), nameInput: $('rName'),
+    scoreEl: $('rScore'), levelEl: $('rLevel'), livesEl: $('rLives'), progEl: $('rProg'),
+    jumpBtn: $('rJump'), shootBtn: $('rShoot'),
+    onEnd: { qualifies: boardRunner.qualifies, save: boardRunner.add },
+  });
+
+  let penaltyScore = 0;
+  let savedLevel = 'normal';
+  try { savedLevel = localStorage.getItem('jsthier-penalty-level') || 'normal'; } catch { /* silent */ }
+
+  const penalty = createGame({
+    wrap: $('gameWrap'), canvas: $('game'), overlay: $('overlay'),
+    ovTitle: $('ovTitle'), ovSub: $('ovSub'), startBtn: $('startBtn'),
+    shotsEl: $('shots'), goalsEl: $('goals'), bestEl: $('best'),
+    level: savedLevel,
+    onLevel(lv) {
+      boardPenalty = penaltyBoards[lv];
+      boardPenalty.render();
+      $('pLvlBadge').textContent = LEVELS[lv].label;
+      $('pLvlBadge').dataset.level = lv;
+      const radio = $('pLevel').querySelector(`input[value="${lv}"]`);
+      if (radio) radio.checked = true;
+      if (mode === 'penalty') $('boardTitle').textContent = `Tirs au but · ${LEVELS[lv].label}`;
+      try { localStorage.setItem('jsthier-penalty-level', lv); } catch { /* silent */ }
+    },
+    onEnd(goals) {
+      penaltyScore = goals;
+      const top = boardPenalty.qualifies(goals);
+      $('pForm').hidden = !top;
+      $('startBtn').hidden = top;
+      $('pLevel').hidden = top;
+      if (top) requestAnimationFrame(() => $('pName').focus());
+    },
+  });
+
+  $('pLevel').addEventListener('change', (e) => penalty.setLevel(e.target.value));
+  $('pForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    boardPenalty.add($('pName').value, penaltyScore);
+    $('pForm').hidden = true;
+    $('startBtn').hidden = false;
+    $('pLevel').hidden = false;
+    $('ovSub').textContent = 'Score enregistré dans le top 3.';
+  });
+  $$('.skip').forEach(b => b.addEventListener('click', () => {
+    const r = b.dataset.skip === 'r';
+    $(r ? 'rForm' : 'pForm').hidden = true;
+    $(r ? 'rStart' : 'startBtn').hidden = false;
+    if (!r) $('pLevel').hidden = false;
+  }));
+
+  const tabs = $$('.gtab');
+  const select = (tab) => {
+    mode = tab.dataset.mode;
+    tabs.forEach(t => { const on = t === tab; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; });
+    $$('.game-pane').forEach(p => { p.hidden = p.dataset.pane !== mode; });
+    $('boardRunner').hidden = mode !== 'runner';
+    $('boardPenalty').hidden = mode !== 'penalty';
+    $('boardTitle').textContent = mode === 'runner' ? 'Runner' : `Tirs au but · ${LEVELS[penalty.level].label}`;
+    showGoal();
+    if (mode !== 'runner') runner.pause();
+  };
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => select(tab));
+    tab.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length];
+      next.focus(); select(next);
+    });
+  });
+  select(tabs[0]);
+</script>

@@ -1,0 +1,29 @@
+---
+// Section héro : accroche, diaporama et appels à l'action (extrait de ClubMarkup.tsx)
+// Le diaporama est piloté par initHeroShow() dans /app.js.
+---
+<section class="hero" aria-labelledby="heroTitle">
+  <div class="hero-oval" aria-hidden="true"></div>
+  <div class="hero-year" aria-hidden="true">19<span>06</span></div>
+
+  <div class="hero-left reveal">
+    <p class="kicker">Football de quartier · Liège</p>
+    <h1 id="heroTitle">JS Thier<br /><em>à Liège</em></h1>
+    <p class="lede">Le club du Thier, où chaque enfant du quartier trouve sa place sur le terrain. Saison 2026-2027 : inscriptions ouvertes, chèques-sport acceptés.</p>
+    <div class="hero-actions">
+      <a href="#inscriptions" class="btn btn-navy">Inscrire mon enfant</a>
+      <a href="#jeu" class="btn btn-line">Tirer un penalty</a>
+    </div>
+  </div>
+
+  <div class="hero-crest reveal">
+    <img src="/images/crest.svg" alt="Écusson de la JS Thier à Liège : bouclier argenté, ovale jaune avec une grappe de raisin bleu marine entre deux serpettes, et l'année 1906." width="300" height="350" fetchpriority="high" decoding="async" />
+  </div>
+
+  <figure class="hero-photo reveal" id="heroShow" aria-roledescription="diaporama" aria-label="Le club en images">
+    <div class="hs-frames" id="hsFrames">
+      <img class="hs-frame on" src="/images/b529bf4e.png" alt="Une équipe de jeunes de la JS Thier à Liège en maillot jaune fluo et bleu marine, avec son entraîneur, devant le club-house." width="380" height="475" decoding="async" />
+    </div>
+    <figcaption><span id="hsCap">Nos jeunes, au Thier</span><span class="hs-dots" id="hsDots"></span></figcaption>
+  </figure>
+</section>

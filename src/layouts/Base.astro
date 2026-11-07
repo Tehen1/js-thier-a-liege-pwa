@@ -1,0 +1,42 @@
+---
+import '../styles/globals.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'JS du Thier à Liège · Club de football, matricule 09075',
+  description = 'JS du Thier à Liège : équipes, inscriptions, chèques-sport, matchs et mini-jeux.',
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/images/crest.svg', Astro.site);
+---
+<!doctype html>
+<html lang="fr-BE">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="application-name" content="JS Thier à Liège" />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#e6e7e9" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1126" />
+    <link rel="icon" href="/images/crest.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta property="og:title" content="JS du Thier à Liège" />
+    <meta property="og:description" content="Club de football de quartier à Liège. Inscriptions, matchs et mini-jeux." />
+    <meta property="og:locale" content="fr_BE" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <!-- Synchronous on purpose: sets data-theme before first paint (no flash). -->
+    <script is:inline src="/theme-init.js"></script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

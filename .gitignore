@@ -2,6 +2,10 @@
 node_modules/
 .next/
 out/
+dist/
+sw.js
+workbox-*.js
+.astro/
 .vercel/
 .turbo/
 .env

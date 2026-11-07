@@ -420,5 +420,6 @@ initTeams();
 initForm();
 initFixtures();
 initCarousel();
-initGames();
+// initGames() désormais géré par l'île Astro client:visible (Jeux.astro)
+// initPwa() géré par /app.js depuis pwa.js (enregistre /sw.js généré par Workbox)
 initPwa();

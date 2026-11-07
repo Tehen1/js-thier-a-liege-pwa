@@ -1,0 +1,21 @@
+---
+// Section Galerie / Carrousel (extrait de ClubMarkup.tsx)
+// Photos et données sociales depuis src/data/photos.ts et src/data/social.ts.
+// Le carrousel est piloté par initCarousel() dans /app.js.
+
+---
+<section id="galerie" class="sec gallery">
+  <header class="sec-head">
+    <span class="num">★</span>
+    <h2>En images</h2>
+  </header>
+  <div class="carousel" id="carousel" aria-roledescription="carrousel" aria-label="Photos du club">
+    <div class="car-track" id="carTrack"></div>
+    <button type="button" class="car-btn prev" id="carPrev" aria-label="Photo précédente">‹</button>
+    <button type="button" class="car-btn next" id="carNext" aria-label="Photo suivante">›</button>
+  </div>
+  <div class="car-foot">
+    <div class="car-dots" id="carDots"></div>
+    <p class="small">Plus de photos sur <a class="link" href="https://www.instagram.com/js_thier_a_liege_a_/" target="_blank" rel="noopener noreferrer">Instagram</a> et <a class="link" href="https://www.facebook.com/JSTHIERALIEGE/" target="_blank" rel="noopener noreferrer">Facebook</a>.</p>
+  </div>
+</section>
