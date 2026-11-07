@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { argv } from 'node:process';
 
-const file = process.argv[2];
+const file = argv[2];
 if (!file) throw new Error('Expected path to headless browser DOM dump');
 const html = readFileSync(file, 'utf8');
 assert.match(html, /<html\b/i, 'Chrome returned no HTML');
