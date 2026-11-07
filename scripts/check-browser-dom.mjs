@@ -15,4 +15,6 @@ assert.ok(carousel?.[1].includes('class="slide'), 'Gallery initialization did no
 const teamGrid = html.match(/<div\b[^>]*id="teamGrid"[^>]*>([\s\S]*?)<\/div>/);
 assert.ok(teamGrid?.[1].includes('class="team'), 'SSR team cards missing in browser');
 assert.match(html, /id="togglePh"/, 'Placeholder toggle missing');
-console.log('Browser runtime smoke: hero, gallery, SSR teams and DOM controls initialized');
+const goal = html.match(/<p\b[^>]*id="podGoal"[^>]*>([\s\S]*?)<\/p>/);
+assert.ok(goal?.[1].includes('première place'), 'Game engines failed to initialize the podium');
+console.log('Browser runtime smoke: hero, gallery, teams, game engines and controls initialized');
