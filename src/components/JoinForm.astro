@@ -1,0 +1,43 @@
+---
+// Section Inscriptions / Pré-inscription (extrait de ClubMarkup.tsx)
+// La validation et le calcul de catégorie sont pilotés par initForm() dans /app.js.
+---
+<section id="inscriptions" class="sec join">
+  <header class="sec-head">
+    <span class="num">III</span>
+    <h2>Inscriptions</h2>
+  </header>
+  <div class="join-grid">
+    <div class="ticket">
+      <div class="ticket-top">
+        <p class="tag">Cotisation saison</p>
+        <p class="price"><mark class="ph">— €</mark></p>
+        <p class="small">Équipement, assurance fédérale et entraînements compris <mark class="ph">(à vérifier)</mark>.</p>
+      </div>
+      <div class="ticket-cut" aria-hidden="true"></div>
+      <div class="ticket-bottom">
+        <p class="tag">Chèque-sport Ville de Liège</p>
+        <p class="price">− 100 €</p>
+        <p class="small">Pour les enfants domiciliés à Liège (4000, 4020, 4030, 4031, 4032), nés entre 2008 et 2022, sous plafond de revenus. La famille fait la demande à Liège Sport ; le chèque est versé directement au club.</p>
+        <a class="link" href="mailto:cheques.sport@liege.be">cheques.sport@liege.be · 04 223 16 34</a>
+      </div>
+    </div>
+
+    <form class="form" id="joinForm" novalidate>
+      <p class="tag">Pré-inscription</p>
+      <label>Prénom et nom de l'enfant<input name="enfant" required autocomplete="off" autocapitalize="words" /></label>
+      <div class="row">
+        <label>Année de naissance<input name="annee" type="number" inputmode="numeric" min="1990" max="2024" required id="annee" /></label>
+        <label>Catégorie conseillée<input name="cat" readonly tabindex="-1" placeholder="—" aria-live="polite" id="cat" /></label>
+      </div>
+      <label>Parent / responsable<input name="parent" required autocomplete="name" /></label>
+      <div class="row">
+        <label>Téléphone<input name="tel" type="tel" required autocomplete="tel" inputmode="tel" /></label>
+        <label>Courriel<input name="mail" type="email" required autocomplete="email" inputmode="email" /></label>
+      </div>
+      <label class="check"><input type="checkbox" name="cheque" /> Je souhaite des infos sur le chèque-sport</label>
+      <button class="btn btn-navy" type="submit">Envoyer la pré-inscription</button>
+      <p class="form-msg" id="formMsg" role="status"></p>
+    </form>
+  </div>
+</section>

@@ -7,9 +7,9 @@ const root = resolve(import.meta.dirname, '..');
 const read = (file) => readFileSync(resolve(root, file), 'utf8');
 const exists = (file) => existsSync(resolve(root, file));
 
-test('Next.js App Router source and legacy game modules exist', () => {
+test('Astro source and legacy game modules exist', () => {
   for (const file of [
-    'app/layout.tsx', 'app/page.tsx', 'components/ClubMarkup.tsx',
+    'src/layouts/Base.astro', 'src/pages/index.astro', 'components/ClubMarkup.tsx',
     'public/sw.js', 'public/manifest.webmanifest',
     'public/game.js', 'public/runner.js', 'public/board.js',
   ]) {

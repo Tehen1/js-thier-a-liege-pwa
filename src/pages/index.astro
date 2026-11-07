@@ -1,0 +1,72 @@
+---
+// Page d'accueil : composition des composants .astro statiques,
+// avec chargement conservé de /app.js pour l'initialisation (thème, héros,
+// équipes, formulaire, jeux) et la gestion d'erreur in-page.
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Teams from '../components/Teams.astro';
+import Gallery from '../components/Gallery.astro';
+import JoinForm from '../components/JoinForm.astro';
+import Jeux from '../components/Jeux.astro';
+import Footer from '../components/Footer.astro';
+---
+<Base title="JS du Thier à Liège · Club de football, matricule 09075" description="JS du Thier à Liège : équipes, inscriptions, chèques-sport, matchs et mini-jeux.">
+  <a href="#top" class="skip">Aller au contenu principal</a>
+
+  <!-- Barre de développement (conservée de ClubMarkup.tsx) -->
+  <aside class="todo-bar" role="region" aria-label="À faire">
+    <span class="tb-title">À faire</span>
+    <ul>
+      <li>Écrire les textes des sections club / terrain / partenaires / contact</li>
+      <li>Intégrer les vraies photos du club (dossier images/)</li>
+      <li>Remplacer les marqueurs "à compléter" par les coachs et horaires</li>
+    </ul>
+  </aside>
+
+  <Nav />
+
+  <main id="top">
+    <Hero />
+
+    <!-- Section Club (présentation) -->
+    <section id="club" class="sec club">
+      <header class="sec-head"><span class="num">I</span><h2>Le club</h2></header>
+      <p>La Jeunesse Sportive du Thier à Liège (matricule 09075) est un club de football de quartier fondé en 1906. Des U6 aux vétérans, en passant par l'école de foot et les équipes jeunes, le Thier accueille chaque enfant qui veut jouer au ballon rond.</p>
+      <p>Valeurs : respect, plaisir, engagement. Entraînements au terrain du Thier, matchs le week-end.</p>
+    </section>
+
+    <Teams />
+    <Gallery />
+    <JoinForm />
+
+    <!-- Section Terrain -->
+    <section id="terrain" class="sec terrain">
+      <header class="sec-head"><span class="num">IV</span><h2>Terrain</h2></header>
+      <p><b>Adresse :</b> Terrain du Thier, Liège</p>
+      <p><b>Entraînements :</b> voir les fiches équipe (à compléter par le comité)</p>
+      <p><b>Matchs :</b> calendrier sur Foot24.be (liens dans chaque fiche équipe)</p>
+    </section>
+
+    <!-- Section Partenaires -->
+    <section id="partners" class="sec partners">
+      <header class="sec-head"><span class="num">VI</span><h2>Partenaires</h2></header>
+      <p class="small">Merci aux commerçants et entreprises du quartier qui soutiennent le club. Vous souhaitez devenir partenaire ? Écrivez-nous à <a href="mailto:contact@jsthier.be">contact@jsthier.be</a>.</p>
+    </section>
+
+    <Jeux />
+
+    <!-- Section Contact -->
+    <section id="contact" class="sec contact">
+      <header class="sec-head"><span class="num">VII</span><h2>Contact</h2></header>
+      <p>Comité de la JS Thier à Liège</p>
+      <p><a href="mailto:contact@jsthier.be">contact@jsthier.be</a> · <a href="https://www.facebook.com/JSTHIERALIEGE/" target="_blank" rel="noopener noreferrer">Facebook</a> · <a href="https://www.instagram.com/js_thier_a_liege_a_/" target="_blank" rel="noopener noreferrer">Instagram</a></p>
+    </section>
+  </main>
+
+  <Footer />
+
+  <!-- Chargement des jeux et de l'initialisation (conservé de l'étape 1) -->
+  <script type="module" src="/app.js" onerror="document.getElementById('appjs-error').hidden=false"></script>
+  <p id="appjs-error" hidden class="appjs-error">Le module d'initialisation (/app.js) n'a pas pu se charger. Certaines fonctionnalités (thème, héros, jeux) peuvent être indisponibles.</p>
+</Base>

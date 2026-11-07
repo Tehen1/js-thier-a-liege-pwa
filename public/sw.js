@@ -1,6 +1,7 @@
 // JS Thier / Next App Router: same-origin, versioned offline cache.
-const CACHE = 'jsthier-next-29bb8dfe9961-gallery-20261102';
-  // Jsthier gallery assets 2026-11-02
+// Keep the "jsthier-next-" prefix so activate() still purges the old Next caches.
+const CACHE = 'jsthier-next-astro-20261105';
+// Jsthier gallery assets 2026-11-05
 const CORE = ['/', '/offline.html', '/manifest.webmanifest', '/app.js', '/pwa.js', '/safe-html.js', '/theme-init.js', '/theme.js', '/game.js', '/runner.js', '/board.js', '/images/crest.svg', '/icons/icon-192.png', '/icons/icon-512.png', '/images/halloween-party-2026-10-30.jpg', '/images/tournois-jeunes-mai.jpg', '/images/cotisations-2026-2027.jpg', '/images/recrutement-u10-u12-u17.jpg', '/images/reprise-entrainements.jpg', '/images/recrutement-u17-joueurs-gardiens.jpg', '/images/photo-equipe-jeunes-clubhouse.jpg'];
 const isSafe = (url) => url.origin === self.location.origin && !url.pathname.startsWith('/api/') && !url.pathname.startsWith('/admin/') && !url.pathname.startsWith('/_next/data/') && !url.searchParams.has('_rsc');
 
@@ -16,7 +17,7 @@ self.addEventListener('install', (event) => {
     const response = responses[0];
     if (response.status === 'fulfilled' && response.value.ok) {
       const markup = await response.value.clone().text();
-      const paths = [...markup.matchAll(/(?:src|href)="(\/_next\/static\/[^"?#]+)"/g)].map((m) => m[1]);
+      const paths = [...markup.matchAll(/(?:src|href)="(\/(?:_next\/static|_astro)\/[^"?#]+)"/g)].map((m) => m[1]);
       await Promise.allSettled([...new Set(paths)].map(async (path) => {
         const asset = await fetch(path, { cache: 'reload' });
         if (asset.ok) await cache.put(path, asset);
@@ -58,7 +59,7 @@ self.addEventListener('fetch', (event) => {
     })());
     return;
   }
-  if (url.pathname.startsWith('/_next/static/')) {
+  if (url.pathname.startsWith('/_astro/')) {
     event.respondWith(caches.open(CACHE).then(async (cache) => {
       const cached = await cache.match(request);
       if (cached) return cached;
