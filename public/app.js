@@ -10,27 +10,8 @@ const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 /* ---------- Données ---------- */
 const SEASON_END = 2027; // saison 2026-2027 : un U7 est né en 2020
 
-// Équipes 2026-2027 (source : Foot24.be, octobre 2026). n = nombre d'équipes dans la catégorie.
-const F24 = 'https://www.foot24.be/fr/clubs/js-du-thier-a-liege';
-const TEAMS = [
-  { name: 'U6',  group: 'ecole',  u: 6,  n: 1, div: 'Régionaux', path: 'u6-6286' },
-  { name: 'U7',  group: 'ecole',  u: 7,  n: 1, path: 'u7-3023' },
-  { name: 'U8',  group: 'ecole',  u: 8,  n: 2, path: 'u8-a-2143' },
-  { name: 'U9',  group: 'ecole',  u: 9,  n: 2, path: 'u9-a-2351' },
-  { name: 'U10', group: 'jeunes', u: 10, n: 2, path: 'u10-a-1799' },
-  { name: 'U11', group: 'jeunes', u: 11, n: 2, path: 'u11-a-1876' },
-  { name: 'U12', group: 'jeunes', u: 12, n: 2, path: 'u12-a-1836' },
-  { name: 'U13', group: 'jeunes', u: 13, n: 2, div: 'Interprovinciaux (A) · Régionaux (B)', path: 'u13-a-1839' },
-  { name: 'U14', group: 'jeunes', u: 14, n: 1, path: 'u14-1570' },
-  { name: 'U15', group: 'jeunes', u: 15, n: 1, path: 'u15-8184' },
-  { name: 'U17', group: 'jeunes', u: 17, n: 1, path: 'u17-2718' },
-  { name: 'Équipe 1A', group: 'seniors', div: '4e provinciale D', path: '1-a-2905' },
-  { name: 'Équipe 1B', group: 'seniors', div: '4e provinciale C', path: '1-b-2745' },
-  { name: 'Réserves',  group: 'seniors', div: 'Réserves du dimanche', path: 'reserven-3246' },
-  { name: 'Vétérans',  group: 'seniors', div: 'Vétérans', path: 'veteranen-245' },
-];
-// couleur du liseré selon le groupe (variables CSS : suivent le thème)
-const GROUP_COLOR = { ecole: 'var(--yellow)', jeunes: 'var(--brand)', seniors: 'var(--strong)' };
+// Team cards and links are rendered by src/components/Teams.astro.
+// Filtering uses SSR DOM nodes and never injects HTML strings.
 
 // Galerie : déposer la photo dans images/ puis ajouter une ligne ici.
 const PHOTOS = [
@@ -88,6 +69,7 @@ function initReveal() {
 /* ---------- Surlignage des champs à compléter ---------- */
 function initPlaceholders() {
   const btn = $('togglePh');
+  if (!btn) return;
   btn.addEventListener('click', () => {
     const clean = document.body.classList.toggle('clean');
     btn.setAttribute('aria-pressed', String(clean));
@@ -98,34 +80,16 @@ function initPlaceholders() {
 /* ---------- Équipes ---------- */
 function initTeams() {
   const grid = $('teamGrid');
-  const ph = (txt) => `<mark class="ph">${txt}</mark>`;
+  if (!grid) return;
+  const cards = $$('a.team[data-group]', grid);
+  const chips = $$('.chip[data-f]');
   const render = (filter) => {
-    const list = TEAMS.filter(t => filter === 'all' || t.group === filter);
-    setHTML(grid, list
-      .map((t) => {
-        const age = t.u ? `Né·es en ${SEASON_END - t.u}${t.div ? ` · ${t.div}` : ''}` : `Seniors · ${t.div}`;
-        return `
-        <a class="team" href="${F24}/${t.path}" target="_blank" rel="noopener noreferrer">
-          <div class="cat">${t.name}${t.n > 1 ? '<sup>A·B</sup>' : ''}</div>
-          <div class="age">${age}</div>
-          <div class="meta">
-            <span><b>Coach</b> · ${ph('à compléter')}</span>
-            <span><b>Entraînement</b> · ${ph('jour et heure')}</span>
-            <span class="cal">Calendrier et résultats <span aria-hidden="true">→</span></span>
-          </div>
-        </a>`;
-      }).join(''));
-    // couleur et décalage d'animation posés via le CSSOM (autorisé par la CSP, contrairement à style="")
-    [...grid.children].forEach((a, i) => {
-      a.style.setProperty('--c', GROUP_COLOR[list[i].group]);
-      a.style.animationDelay = `${i * 40}ms`;
+    cards.forEach((card) => {
+      card.hidden = filter !== 'all' && card.dataset.group !== filter;
     });
+    chips.forEach((chip) => chip.setAttribute('aria-pressed', String(chip.dataset.f === filter)));
   };
-  const chips = $$('.chip');
-  chips.forEach(chip => chip.addEventListener('click', () => {
-    chips.forEach(c => c.setAttribute('aria-selected', String(c === chip)));
-    render(chip.dataset.f);
-  }));
+  chips.forEach((chip) => chip.addEventListener('click', () => render(chip.dataset.f)));
   render('all');
 }
 
@@ -156,7 +120,7 @@ function initForm() {
     }
     const name = form.elements.enfant.value.trim().split(/\s+/)[0];
     msg.className = 'form-msg ok';
-    msg.textContent = `Merci ! La demande pour ${name} est prête. Le club vous recontactera.`;
+    msg.textContent = `Formulaire de démonstration : aucune demande envoyée pour ${name}. Contactez directement le club pour une inscription.`;
     form.reset();
     cat.value = '';
     fields.forEach(inp => inp.removeAttribute('aria-invalid'));
@@ -380,7 +344,7 @@ function setupGames({ createGame, LEVELS }, { createRunner }, { createBoard }) {
     $('pLevel').hidden = false;
     $('ovSub').textContent = 'Score enregistré dans le top 3.';
   });
-  $$('.skip').forEach(b => b.addEventListener('click', () => {
+  $('button[data-skip]').forEach(b => b.addEventListener('click', () => {
     const r = b.dataset.skip === 'r';
     $(r ? 'rForm' : 'pForm').hidden = true;
     $(r ? 'rStart' : 'startBtn').hidden = false;
@@ -420,6 +384,6 @@ initTeams();
 initForm();
 initFixtures();
 initCarousel();
-// initGames() désormais géré par l'île Astro client:visible (Jeux.astro)
-// initPwa() géré par /app.js depuis pwa.js (enregistre /sw.js généré par Workbox)
+// Load games lazily from the same external ES module; no duplicate inline bootstrap.
+initGames();
 initPwa();
