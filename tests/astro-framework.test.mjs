@@ -15,7 +15,7 @@ test('Astro must not include a Next.js root middleware', () => {
 
 test('GitHub CI uses the Node.js major declared by the app', () => {
   const pkg = JSON.parse(read('package.json'));
-  assert.match(pkg.engines.node, /^\\d+\\.x$/);
+  assert.match(pkg.engines.node, /^[0-9]+[.]x$/);
   const major = pkg.engines.node.split('.')[0];
   const ci = read('.github/workflows/ci.yml');
   assert.ok(ci.includes(`node-version: '${major}'`));
