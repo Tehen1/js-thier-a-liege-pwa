@@ -41,6 +41,11 @@ function initServiceWorker() {
   if (!('serviceWorker' in navigator) || !window.isSecureContext || !/^https?:$/.test(location.protocol)) return;
   const register = async () => {
     try {
+      // Désenregistre tout ancien SW (notamment l'ancien SW Next.js) avant d'installer le nouveau Workbox SW.
+      // Sans cela, l'ancien SW reste controller et intercepte les requêtes (/_next/data/, etc.)
+      // bloquant le chargement des fichiers de jeux en production.
+      const regs = await navigator.serviceWorker.getRegistrations();
+      for (const old of regs) await old.unregister();
       const reg = await navigator.serviceWorker.register('sw.js', { scope: './', updateViaCache: 'none' });
       const offerUpdate = (worker) => toast('Une nouvelle version du site est disponible.', {
         label: 'Mettre à jour',
