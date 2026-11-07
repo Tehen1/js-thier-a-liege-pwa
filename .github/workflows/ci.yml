@@ -90,3 +90,42 @@ jobs:
             echo "Built page still references the Next.js runtime" >&2
             exit 1
           fi
+
+      - name: Mobile Chrome runtime smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          chrome="$(command -v google-chrome || command -v chromium || true)"
+          if [[ -z "$chrome" ]]; then
+            echo "::error::Chrome is required to validate the mobile JavaScript runtime" >&2
+            exit 1
+          fi
+          browser_profile="$(mktemp -d)"
+          browser_dom="$(mktemp)"
+          browser_log="$(mktemp)"
+          pnpm exec astro preview --host 127.0.0.1 --port 3211 > /tmp/jsthier-browser-preview.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true; rm -rf "$browser_profile"; rm -f "$browser_dom" "$browser_log"' EXIT
+          ready=0
+          for attempt in $(seq 1 45); do
+            if curl --fail --silent --output /dev/null http://127.0.0.1:3211/; then
+              ready=1
+              break
+            fi
+            if ! kill -0 "$server_pid" 2>/dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          if [[ "$ready" != "1" ]]; then
+            cat /tmp/jsthier-browser-preview.log
+            exit 1
+          fi
+          "$chrome" --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --disable-extensions --no-first-run --user-data-dir="$browser_profile" \
+            --window-size=591,685 --virtual-time-budget=4500 --dump-dom \
+            http://127.0.0.1:3211/ > "$browser_dom" 2> "$browser_log" || {
+            cat "$browser_log" >&2
+            exit 1
+          }
+          node scripts/check-browser-dom.mjs "$browser_dom"

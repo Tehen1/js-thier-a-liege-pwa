@@ -1,35 +1,38 @@
 ---
-// Section Équipes 2026-2027 (extrait de ClubMarkup.tsx)
-// Données typées depuis src/data/teams.ts ; le rendu des cartes et le filtrage
-// par groupe sont pilotés par initTeams() dans /app.js.
-import { TEAMS } from '../data/teams';
+// Render actual Astro elements, never raw HTML strings. The client script
+// filters these SSR cards in place without replacing their content.
+import { F24, GROUP_COLOR, SEASON_END, TEAMS } from '../data/teams';
 ---
 <section id="equipes" class="sec teams">
   <header class="sec-head">
     <span class="num">II</span>
     <h2>Équipes 2026-2027</h2>
   </header>
-  <div class="filters" role="tablist" aria-label="Filtrer les équipes">
-    <button class="chip" type="button" role="tab" aria-selected="true" data-f="all">Toutes</button>
-    <button class="chip" type="button" role="tab" aria-selected="false" data-f="ecole">École de foot</button>
-    <button class="chip" type="button" role="tab" aria-selected="false" data-f="jeunes">Jeunes</button>
-    <button class="chip" type="button" role="tab" aria-selected="false" data-f="seniors">Seniors</button>
+  <div class="filters" role="group" aria-label="Filtrer les équipes">
+    <button class="chip" type="button" aria-pressed="true" data-f="all">Toutes</button>
+    <button class="chip" type="button" aria-pressed="false" data-f="ecole">École de foot</button>
+    <button class="chip" type="button" aria-pressed="false" data-f="jeunes">Jeunes</button>
+    <button class="chip" type="button" aria-pressed="false" data-f="seniors">Seniors</button>
   </div>
   <div class="team-grid" id="teamGrid" aria-live="polite">
-    {TEAMS.map((t) => {
-      const age = t.u ? `Né·es en ${2027 - t.u}${t.div ? ` · ${t.div}` : ''}` : `Seniors · ${t.div}`;
-      return `
-        <a class="team" href="${'https://www.foot24.be/fr/clubs/js-du-thier-a-liege'}/${t.path}" target="_blank" rel="noopener noreferrer">
-          <div class="cat">${t.name}${t.n > 1 ? '<sup>A·B</sup>' : ''}</div>
-          <div class="age">${age}</div>
-          <div class="meta">
-            <span><b>Coach</b> · <mark class="ph">à compléter</mark></span>
-            <span><b>Entraînement</b> · <mark class="ph">jour et heure</mark></span>
-            <span class="cal">Calendrier et résultats <span aria-hidden="true">→</span></span>
-          </div>
-        </a>
-      `;
-    }).join('')}
+    {TEAMS.map((team, index) => (
+      <a
+        class="team"
+        data-group={team.group}
+        href={`${F24}/${team.path}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={`--c: ${GROUP_COLOR[team.group]}; animation-delay: ${index * 40}ms`}
+      >
+        <div class="cat">{team.name}{(team.n ?? 0) > 1 && <sup>A·B</sup>}</div>
+        <div class="age">{team.u ? `Né·es en ${SEASON_END - team.u}${team.div ? ` · ${team.div}` : ""}` : `Seniors · ${team.div ?? ""}`}</div>
+        <div class="meta">
+          <span><b>Coach</b> · <mark class="ph">à compléter</mark></span>
+          <span><b>Entraînement</b> · <mark class="ph">jour et heure</mark></span>
+          <span class="cal">Calendrier et résultats <span aria-hidden="true">→</span></span>
+        </div>
+      </a>
+    ))}
   </div>
-  <p class="note">Liste des équipes : <a class="link" href="https://www.foot24.be/fr/clubs/js-du-thier-a-liege" target="_blank" rel="noopener noreferrer">Foot24.be</a>, octobre 2026. Chaque fiche ouvre le calendrier de l'équipe. Entraîneurs et horaires d'entraînement : <mark class="ph">à compléter par le comité</mark>.</p>
+  <p class="note">Liste des équipes : <a class="link" href={F24} target="_blank" rel="noopener noreferrer">Foot24.be</a>, octobre 2026. Chaque fiche ouvre le calendrier de l’équipe. Entraîneurs et horaires d’entraînement : <mark class="ph">à compléter par le comité</mark>.</p>
 </section>

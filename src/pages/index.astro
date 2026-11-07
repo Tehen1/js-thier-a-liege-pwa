@@ -22,6 +22,7 @@ import Footer from '../components/Footer.astro';
       <li>Intégrer les vraies photos du club (dossier images/)</li>
       <li>Remplacer les marqueurs "à compléter" par les coachs et horaires</li>
     </ul>
+    <button type="button" id="togglePh" aria-pressed="false">Masquer le surlignage</button>
   </aside>
 
   <Nav />
@@ -66,7 +67,7 @@ import Footer from '../components/Footer.astro';
 
   <Footer />
 
-  <!-- Chargement des jeux et de l'initialisation (conservé de l'étape 1) -->
-  <script type="module" src="/app.js" onerror="document.getElementById('appjs-error').hidden=false"></script>
-  <p id="appjs-error" hidden class="appjs-error">Le module d'initialisation (/app.js) n'a pas pu se charger. Certaines fonctionnalités (thème, héros, jeux) peuvent être indisponibles.</p>
+  <!-- External ES module; no inline event handler blocked by CSP. -->
+  <script type="module" src="/app.js"></script>
+  <noscript>Les fonctionnalités interactives nécessitent JavaScript. Les informations du club restent consultables.</noscript>
 </Base>
