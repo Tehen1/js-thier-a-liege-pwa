@@ -9,12 +9,21 @@ export default defineConfig({
     react(),
     AstroPWAIntegration({
       registerType: 'autoUpdate',
-      workbox: {
-        globPatterns: ['**/*.{js,css,webmanifest,svg,png,jpg,jpeg,webp,ico}'],
+      generateSW: {
+        globPatterns: ['**/*.{js,css,svg,png,jpg,jpeg,webp,ico}'],
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         navigateFallback: '/',
         navigateFallbackDenylist: [/^\/_astro/, /^\/api/, /^\/admin/],
         swDest: 'sw.js',
+        // Évite les doublons : manifest + icônes déclarés dans le manifest PWA
+        // sont déjà pris en charge par le plugin ; pas besoin de les précacher deux fois.
+        globIgnores: [
+          '**/manifest.webmanifest',
+          '**/icons/icon-192.png',
+          '**/icons/icon-512.png',
+          '**/icons/maskable.svg',
+          '**/images/crest.svg',
+        ],
       },
       manifest: {
         name: 'JS du Thier à Liège',

@@ -10,11 +10,13 @@ const exists = (file) => existsSync(resolve(root, file));
 test('Astro source and legacy game modules exist', () => {
   for (const file of [
     'src/layouts/Base.astro', 'src/pages/index.astro', 'src/components/ClubMarkup.tsx',
-    'public/sw.js', 'public/manifest.webmanifest',
+    'public/manifest.webmanifest',
     'public/game.js', 'public/runner.js', 'public/board.js',
   ]) {
     assert.ok(exists(file), `Missing source: ${file}`);
   }
+  // public/sw.js a été retiré : le Service Worker est généré par Workbox
+  // (@vite-pwa/astro) dans dist/sw.js au build.
 });
 
 test('PWA manifest icons all refer to existing local files', () => {
@@ -31,21 +33,6 @@ test('PWA manifest icons all refer to existing local files', () => {
     assert.ok(manifest.icons.some(icon => icon.sizes === size && icon.type === 'image/png'),
       `Missing installable PNG icon: ${size}`);
   }
-});
-
-test('Service Worker precache resolves to real static files', () => {
-  const source = read('public/sw.js');
-  const precache = source.match(/const CORE\s*=\s*\[([\s\S]*?)\]/);
-  assert.ok(precache, 'Missing CORE precache list');
-  const routes = [...precache[1].matchAll(/'([^']+)'/g)].map((match) => match[1]);
-  assert.ok(routes.length > 0);
-  for (const route of routes) {
-    if (route === '/') continue;
-    assert.ok(route.startsWith('/') && !route.includes('..'), `Unsafe route: ${route}`);
-    assert.ok(exists(`public${route}`), `Missing precache asset: ${route}`);
-  }
-  assert.match(source, /url\.pathname\.startsWith\('\/api\/'\)/);
-  assert.match(source, /url\.pathname\.startsWith\('\/_next\/data\/'\)/);
 });
 
 test('Turborepo gates build on static quality tasks', () => {

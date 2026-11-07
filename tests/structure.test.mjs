@@ -55,9 +55,11 @@ test('ClubMarkup.tsx exists as compatibility component', () => {
 
 // --- Fichiers PWA et jeux ---
 test('exposes all original game modules and PWA files', () => {
-  for (const file of ['app.js', 'game.js', 'runner.js', 'board.js', 'sw.js', 'manifest.webmanifest']) {
+  for (const file of ['app.js', 'game.js', 'runner.js', 'board.js', 'manifest.webmanifest']) {
     assert.ok(exists(`public/${file}`), `${file} missing`);
   }
+  // sw.js est généré par Workbox (@vite-pwa/astro) dans dist/ au build ;
+  // le fichier public/sw.js manuel a été retiré.
 });
 
 // --- Compatibilité Next.js supprimée ---
