@@ -18,7 +18,7 @@ assert.doesNotMatch(html, /<script\b[^>]*client:visible/i, 'Astro client directi
 
 // Classic inline scripts must be syntactically valid, including the prohibition
 // on top-level await outside modules (the original game error in the screenshot).
-for (const [full, attrs, code] of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
+for (const [, attrs, code] of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
   if (/\bsrc\s*=/.test(attrs) || /\btype\s*=\s*['"](?:module|application\/ld\+json|application\/json)['"]/.test(attrs)) continue;
   if (code.trim()) new Script(code, { filename: 'dist/index.html inline script' });
 }
