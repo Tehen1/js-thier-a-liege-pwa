@@ -36,9 +36,10 @@ test('Vercel CI discovers tagged Turborepo checks for the single-package app', (
   const pkg = JSON.parse(read('package.json'));
   const turbo = JSON.parse(read('turbo.json'));
   assert.match(pkg.devDependencies.turbo, /^[0-9]+[.][0-9]+[.][0-9]+$/);
-  for (const task of ['typecheck', 'lint', 'test', 'build']) {
+  for (const task of ['typecheck', 'lint', 'test']) {
     assert.ok(turbo.tasks[task].tags.includes('ci'), `Missing ci tag for ${task}`);
   }
+  assert.ok(!turbo.tasks.build.tags?.includes('ci'), 'Build must not run twice in Vercel CI');
 });
 
 test('pnpm exposes generated Workbox entrypoint dependencies', () => {
