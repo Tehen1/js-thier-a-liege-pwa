@@ -1,0 +1,8 @@
+packages:
+  - '.'
+
+# pnpm's strict node_modules layout otherwise leaves Vite PWA generated entrypoints
+# unable to resolve these indirect Workbox modules under Rolldown.
+publicHoistPattern:
+  - '@vite-pwa/workbox-swkit'
+  - '@vite-pwa/workbox-window'
