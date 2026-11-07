@@ -1,6 +1,8 @@
 name: Regenerate pnpm lockfile (temporary)
 
 on:
+  pull_request:
+    branches: [main]
   push:
     branches:
       - fix/astro-middleware-node22-20261107
