@@ -31,3 +31,19 @@ test('Vercel preserves baseline HTTP security headers', () => {
   assert.equal(headers.get('X-Frame-Options'), 'DENY');
   assert.equal(headers.get('Referrer-Policy'), 'strict-origin-when-cross-origin');
 });
+
+test('Vercel CI discovers tagged Turborepo checks for the single-package app', () => {
+  const pkg = JSON.parse(read('package.json'));
+  const turbo = JSON.parse(read('turbo.json'));
+  assert.match(pkg.devDependencies.turbo, /^[0-9]+[.][0-9]+[.][0-9]+$/);
+  for (const task of ['typecheck', 'lint', 'test', 'build']) {
+    assert.ok(turbo.tasks[task].tags.includes('ci'), `Missing ci tag for ${task}`);
+  }
+});
+
+test('pnpm exposes generated Workbox entrypoint dependencies', () => {
+  const config = read('pnpm-workspace.yaml');
+  for (const name of ['@vite-pwa/workbox-window', '@vite-pwa/workbox-swkit']) {
+    assert.ok(config.includes(name), `Missing hoist for ${name}`);
+  }
+});
