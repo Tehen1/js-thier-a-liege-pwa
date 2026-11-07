@@ -40,7 +40,16 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Verify types, ESLint, tests and Astro build
-        run: pnpm run check
+        shell: bash
+        run: |
+          set -euo pipefail
+          build_log="$(mktemp)"
+          trap 'rm -f "$build_log"' EXIT
+          pnpm run check 2>&1 | tee "$build_log"
+          if grep -Eq '\[UNRESOLVED_IMPORT\]|Module not found, treating it as an external dependency' "$build_log"; then
+            echo "::error::Unresolved import in the PWA build. Check Workbox hoisting." >&2
+            exit 1
+          fi
 
       - name: Static preview HTTP smoke test
         shell: bash
