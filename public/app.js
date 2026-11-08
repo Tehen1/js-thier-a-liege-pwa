@@ -344,7 +344,7 @@ function setupGames({ createGame, LEVELS }, { createRunner }, { createBoard }) {
     $('pLevel').hidden = false;
     $('ovSub').textContent = 'Score enregistré dans le top 3.';
   });
-  $('button[data-skip]').forEach(b => b.addEventListener('click', () => {
+  $$('button[data-skip]').forEach(b => b.addEventListener('click', () => {
     const r = b.dataset.skip === 'r';
     $(r ? 'rForm' : 'pForm').hidden = true;
     $(r ? 'rStart' : 'startBtn').hidden = false;
