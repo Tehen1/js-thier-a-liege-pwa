@@ -24,6 +24,7 @@ const PHOTOS = [
   { src: "/images/reprise-entrainements.jpg", alt: "Affiche du planning de reprise des entraînements des équipes de jeunes", caption: "Vie du club · Reprise des entraînements", source: "", poster: true, portrait: false, hero: false },
   { src: "/images/recrutement-u17-joueurs-gardiens.jpg", alt: "Affiche de recrutement de joueurs et gardiens pour les U17", caption: "Recrutement · U17, joueurs et gardiens", source: "", poster: true, portrait: false, hero: false },
   { src: "/images/photo-equipe-jeunes-clubhouse.jpg", alt: "Équipe de jeunes du club avec son encadrement, devant le club-house", caption: "Photo de club · Équipe de jeunes", source: "", poster: true, portrait: false, hero: false },
+  { src: "/images/u9-equipe.gif", alt: "Équipe U9 du club, dessin animé style cartoon années 90", caption: "Équipe U9 · Cartoon années 90", source: "", poster: true, portrait: false, hero: false },
 ];
 const SOCIAL = [
   { kind: 'instagram', title: 'Suivez-nous sur Instagram', handle: '@js_thier_a_liege_a_', href: 'https://www.instagram.com/js_thier_a_liege_a_/' },
@@ -89,8 +90,13 @@ function initTeams() {
     });
     chips.forEach((chip) => chip.setAttribute('aria-pressed', String(chip.dataset.f === filter)));
   };
-  chips.forEach((chip) => chip.addEventListener('click', () => render(chip.dataset.f)));
-  render('all');
+  chips.forEach(chip => chip.addEventListener('click', () => {
+    chips.forEach(c => c.setAttribute('aria-selected', String(c === chip)));
+    render(chip.dataset.f);
+  }));
+  // Ne pas écraser le HTML déjà rendu côté serveur par Astro (équipes présentes au premier paint).
+  // Le filtrage côté client via les boutons .chip appelle render() à la demande.
+  if (!grid.children.length) render('all');
 }
 
 /* ---------- Pré-inscription (démo : aucun envoi pour l'instant) ---------- */

@@ -80,6 +80,15 @@ export const PHOTOS: Photo[] = [
     portrait: false,
     hero: false,
   },
+  {
+    src: '/images/u9-equipe.gif',
+    alt: 'Équipe U9 du club, dessin animé style cartoon années 90',
+    caption: 'Équipe U9 · Cartoon années 90',
+    source: '',
+    poster: true,
+    portrait: false,
+    hero: false,
+  },
 ];
 
 export const HERO_CARDS = [

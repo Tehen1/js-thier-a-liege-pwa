@@ -13,17 +13,13 @@
     "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm build"
   },
   "dependencies": {
-    "@astrojs/react": "7.1.2",
-    "astro": "7.4.5",
-    "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "astro": "7.4.5"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.4",
     "@eslint/js": "9.29.0",
+    "@playwright/test": "^1.65.0",
     "@types/node": "22.19.0",
-    "@types/react": "19.2.13",
-    "@types/react-dom": "19.2.3",
     "@vite-pwa/astro": "2.0.0",
     "eslint": "9.39.1",
     "eslint-plugin-astro": "3.2.1",
