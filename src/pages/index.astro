@@ -30,38 +30,193 @@ import Footer from '../components/Footer.astro';
   <main id="top">
     <Hero />
 
-    <!-- Section Club (présentation) -->
-    <section id="club" class="sec club">
-      <header class="sec-head"><span class="num">I</span><h2>Le club</h2></header>
-      <p>La Jeunesse Sportive du Thier à Liège (matricule 09075) est un club de football de quartier fondé en 1906. Des U6 aux vétérans, en passant par l'école de foot et les équipes jeunes, le Thier accueille chaque enfant qui veut jouer au ballon rond.</p>
-      <p>Valeurs : respect, plaisir, engagement. Entraînements au terrain du Thier, matchs le week-end.</p>
+    <!-- Chiffres clés (chiffres de la maquette) -->
+    <section id="chiffres" class="sec stats sec-in reveal" aria-labelledby="chiffresTitle">
+      <h2 id="chiffresTitle" class="sr-only">Chiffres clés du club</h2>
+      <div class="stat" id="statEquipes"><b id="nEquipes">21</b><span>équipes engagées en 2026-2027</span></div>
+      <div class="stat" id="statJeunes"><b id="nJeunes">17</b><span>équipes de jeunes, des U6 aux U17</span></div>
+      <div class="stat" id="statMatricule"><b id="nMatricule">09075</b><span>matricule fédéral ACFF</span></div>
+      <div class="stat" id="statCheque"><b id="nCheque">100 €</b><span>chèque-sport par enfant éligible</span></div>
     </section>
 
-    <Teams />
+    <!-- Section I · Le club -->
+    <section id="club" class="sec club sec-in reveal" aria-labelledby="clubTitle">
+      <header class="sec-head"><span class="num">I</span><h2 id="clubTitle">Le club</h2></header>
+      <div class="club-text">
+        <p>La JS du Thier à Liège fait jouer plus de vingt équipes, de l'école de foot (U6) jusqu'aux vétérans.</p>
+        <p>Le club porte le matricule <b>09075</b>. Son équipe première joue en 4e provinciale D, l'équipe 1B en 4e provinciale C. Les matchs à domicile se jouent sur les deux terrains de la rue du Plope.</p>
+        <p>C'est une ASBL affiliée à l'ACFF. Elle soutient l'action communale « Pour un sport sain, amical et respectueux » et figure parmi les clubs aidés par la Ville de Liège en 2024-2025.</p>
+      </div>
+
+      <div class="crest-card">
+        <img src="/images/crest.svg" alt="Écusson de la JS Thier à Liège : bouclier argenté, ovale jaune avec une grappe de raisin bleu marine entre deux serpettes, et l'année 1906." width="150" height="175" loading="lazy" decoding="async" />
+        <dl>
+          <div>
+            <dt>Le Thier</dt>
+            <dd>Le club vient d'un ancien quartier ouvrier sur les hauteurs nord de Liège, longtemps dominé par les charbonnages jusqu'au milieu des années 1960. Trois terrils entourent encore le quartier, construit dans les années 1920 comme cité-jardin pour les mineurs.</dd>
+          </div>
+          <div>
+            <dt>Couleurs</dt>
+            <dd>Jaune et bleu marine.</dd>
+          </div>
+          <div>
+            <dt>Histoire</dt>
+            <dd>Fondation en 1906 à confirmer par le comité. Lecture probable de l'écusson à faire valider par le club.</dd>
+          </div>
+        </dl>
+        <p class="crest-note">La grappe · Les coteaux du nord de Liège étaient couverts de vignes jusqu'au milieu du XIXe siècle. Les serpettes · l'outil des vignerons, dont le « bon métier » était l'un des plus puissants de la cité.</p>
+      </div>
+
+      <div class="values sec-in reveal">
+        <div>
+          <b>Respect</b><span>de l'arbitre, de l'adversaire, des coéquipiers.</span>
+        </div>
+        <div>
+          <b>Accès pour tous</b><span>tarifs sociaux et chèques-sport.</span>
+        </div>
+        <div>
+          <b>Formation</b><span>des entraîneurs qui font progresser chaque joueur.</span>
+        </div>
+      </div>
+
+      <div class="memory sec-in reveal">
+        <ol>
+          <li><span>1</span>18 oct. 2026 — L'équipe 1A s'impose 3-4 à Wandre, en 4e provinciale D.</li>
+          <li><span>2</span>Août 2019 — Une U7 du club repérée par le Standard de Liège.</li>
+          <li><span>3</span>Août 2019 — Un U21 invité aux tests à Mouscron.</li>
+          <li><span>4</span>Août 2019 — L'équipe première P4 qualifiée en Coupe P3-P4.</li>
+        </ol>
+      </div>
+    </section>
+
     <Gallery />
+    <Teams />
     <JoinForm />
 
-    <!-- Section Terrain -->
-    <section id="terrain" class="sec terrain">
-      <header class="sec-head"><span class="num">IV</span><h2>Terrain</h2></header>
-      <p><b>Adresse :</b> Terrain du Thier, Liège</p>
-      <p><b>Entraînements :</b> voir les fiches équipe (à compléter par le comité)</p>
-      <p><b>Matchs :</b> calendrier sur Foot24.be (liens dans chaque fiche équipe)</p>
-    </section>
+    <!-- Section IV · Le terrain -->
+    <section id="terrain" class="sec terrain sec-in reveal" aria-labelledby="terrainTitle">
+      <header class="sec-head"><span class="num">IV</span><h2 id="terrainTitle">Le terrain</h2></header>
 
-    <!-- Section Partenaires -->
-    <section id="partners" class="sec partners">
-      <header class="sec-head"><span class="num">VI</span><h2>Partenaires</h2></header>
-      <p class="small">Merci aux commerçants et entreprises du quartier qui soutiennent le club. Vous souhaitez devenir partenaire ? Écrivez-nous à <a href="mailto:contact@jsthier.be">contact@jsthier.be</a>.</p>
+      <div class="club-text">
+        <p><b>Terrains de la rue du Plope</b></p>
+        <p>Rue du Plope, 4000 Liège (Thier-à-Liège) · <a class="link" href="#">Itinéraire</a></p>
+      </div>
+
+      <dl class="crest-card">
+        <div>
+          <dt>Terrains</dt>
+          <dd>2, rue du Plope</dd>
+        </div>
+        <div>
+          <dt>Équipe première</dt>
+          <dd>1A en 4e provinciale D</dd>
+        </div>
+        <div>
+          <dt>Compétitions</dt>
+          <dd>34 cette saison, des U6 aux vétérans</dd>
+        </div>
+        <div>
+          <dt>Supporters</dt>
+          <dd>138 suivent le calendrier sur Foot24</dd>
+        </div>
+        <div>
+          <dt>Surface</dt>
+          <dd>synthétique / herbe</dd>
+        </div>
+        <div>
+          <dt>Vestiaires</dt>
+          <dd>oui / non</dd>
+        </div>
+        <div>
+          <dt>Buvette</dt>
+          <dd>horaires</dd>
+        </div>
+        <div>
+          <dt>Accès bus</dt>
+          <dd>Ligne TEC 24, qui dessert le Thier-à-Liège</dd>
+        </div>
+      </dl>
+
+      <h3 class="big">Prochains matchs · Au 25 octobre 2026</h3>
+      <div class="filters" role="group" aria-label="Filtrer les matchs">
+        <button class="chip" type="button" aria-pressed="true" data-f="all">Tous</button>
+        <button class="chip" type="button" aria-pressed="false" data-f="home">Domicile</button>
+        <button class="chip" type="button" aria-pressed="false" data-f="away">Extérieur</button>
+      </div>
+      <ol class="memory">
+        <li><span>Dim. 25 oct.</span>11:30 · Réserves · Réserves Dimanche (RB) · <b>JS Thier – Union Roclenge-Wonck</b> · Domicile · rue du Plope</li>
+        <li><span>Dim. 25 oct.</span>15:00 · 1A · 4e Prov. D · <b>JS Thier – Union Roclenge-Wonck</b> · Domicile · rue du Plope</li>
+        <li><span>Dim. 25 oct.</span>15:00 · 1B · 4e Prov. C · <b>Engis FC – JS Thier</b> · Extérieur · rue des Fagnes 17, Engis</li>
+        <li><span>Sam. 31 oct.</span>13:30 · U15 · Coupe U15 Série 04 · <b>JS Pierreuse – JS Thier</b> · Extérieur · rue des Glacis 417, Liège</li>
+        <li><span>Sam. 31 oct.</span>13:30 · U14 · Coupe U14 Série 02 · <b>FC Seraing – JS Thier</b> · Extérieur · rue de la Boverie 255, Seraing</li>
+        <li><span>Dim. 8 nov.</span>14:30 · 1A · 4e Prov. D · <b>JS Thier – Jeunesse Montegnée Saint-Nicolas Tilleur</b> · Domicile · rue du Plope</li>
+        <li><span>Dim. 29 nov.</span>14:30 · 1A · 4e Prov. D · <b>JS Thier – MS Herstal Milmort</b> · Domicile · rue du Plope</li>
+        <li><span>Dim. 6 déc.</span>14:30 · 1A · 4e Prov. D · <b>JS Thier – RUS Glontoise</b> · Domicile · rue du Plope</li>
+        <li><span>Dim. 20 déc.</span>14:30 · 1A · 4e Prov. D · <b>JS Thier – AS Hermalienne</b> · Domicile · rue du Plope</li>
+      </ol>
+
+      <h3 class="big">Derniers résultats · 4 victoires · 1 nul</h3>
+      <ol class="memory">
+        <li><span>Dim. 18 oct.</span>1A · 4e Prov. D · <b>RSC Wandre 3 – 4 JS Thier</b> · V</li>
+        <li><span>Dim. 18 oct.</span>Réserves · Coupe Réserves (CRC) · <b>Seraing Athlétique 1 – 3 JS Thier</b> · V</li>
+        <li><span>Sam. 17 oct.</span>Vétérans · Coupe APLV · <b>RFC Queue-du-Bois 2 – 3 JS Thier</b> · V</li>
+        <li><span>Sam. 17 oct.</span>U14 · Coupe U14 Série 02 · <b>JS Thier 5 – 3 Ellas Herstal</b> · V</li>
+        <li><span>Sam. 17 oct.</span>U15 · Coupe U15 Série 04 · <b>JS Thier 0 – 0 FC Ans</b> · N</li>
+      </ol>
+
+      <p class="note">Joués le samedi 24 octobre, résultats pas encore publiés : U13 A à Aywaille, U8 B à Ellas Herstal, U13 B à Xhoris et vétérans à Queue-du-Bois.</p>
+      <p class="note">📅 Calendrier complet et résultats en direct — Les 21 équipes, jeunes compris, mis à jour chaque semaine sur <a class="link" href="https://www.foot24.be" target="_blank" rel="noopener noreferrer">Foot24.be</a> <span aria-hidden="true">→</span></p>
     </section>
 
     <Jeux />
 
-    <!-- Section Contact -->
-    <section id="contact" class="sec contact">
-      <header class="sec-head"><span class="num">VII</span><h2>Contact</h2></header>
-      <p>Comité de la JS Thier à Liège</p>
-      <p><a href="mailto:contact@jsthier.be">contact@jsthier.be</a> · <a href="https://www.facebook.com/JSTHIERALIEGE/" target="_blank" rel="noopener noreferrer">Facebook</a> · <a href="https://www.instagram.com/js_thier_a_liege_a_/" target="_blank" rel="noopener noreferrer">Instagram</a></p>
+    <!-- Section VI · Ils nous soutiennent -->
+    <section id="partners" class="sec partners sec-in reveal" aria-labelledby="partnersTitle">
+      <header class="sec-head"><span class="num">VI</span><h2 id="partnersTitle">Ils nous soutiennent</h2></header>
+      <div class="values">
+        <div>
+          <b>Ville de Liège</b><span>Soutien communal</span>
+        </div>
+        <div>
+          <b>Liège Sport</b><span>Chèques-sport</span>
+        </div>
+        <div>
+          <b>ACFF</b><span>Fédération</span>
+        </div>
+      </div>
+      <p class="note">Votre commerce ici ? Parrainez une équipe · Votre entreprise ? Matériel, transport, maillots. Commerçant ou entreprise du quartier ? Nous proposons des partenariats concrets : un projet, un budget, une visibilité réelle. <a class="link" href="mailto:contact@jsthier.be">Parlons-en.</a></p>
+    </section>
+
+    <!-- Section VII · Contact & comité -->
+    <section id="contact" class="sec contact sec-in reveal" aria-labelledby="contactTitle">
+      <header class="sec-head"><span class="num">VII</span><h2 id="contactTitle">Contact & comité</h2></header>
+      <dl class="crest-card">
+        <div>
+          <dt>Président·e</dt>
+          <dd>Nom</dd>
+        </div>
+        <div>
+          <dt>Secrétaire</dt>
+          <dd>Nom</dd>
+        </div>
+        <div>
+          <dt>Trésorier·ère</dt>
+          <dd>Nom</dd>
+        </div>
+        <div>
+          <dt>Responsable jeunes</dt>
+          <dd>Nom</dd>
+        </div>
+      </dl>
+      <p class="big">Écrire au club</p>
+      <p><a href="mailto:contact@jsthier.be">contact@jsthier.be</a> · <a href="tel:+324xxxxx">+32 4xx xx xx xx</a></p>
+      <p class="small">ASBL · BCE 0xxx.xxx.xxx · Matricule ACFF 09075</p>
+      <p class="note">Bénévoles bienvenus : arbitrage, buvette, transport, administratif.</p>
+      <div class="foot-social" style="margin-block-start: 16px;">
+        <a class="link" href="https://www.instagram.com/js_thier_a_liege_a_/" target="_blank" rel="noopener noreferrer">Instagram · @js_thier_a_liege_a_</a>
+        <br />
+        <a class="link" href="https://www.facebook.com/JSTHIERALIEGE/" target="_blank" rel="noopener noreferrer">Facebook · @JSTHIERALIEGE</a>
+      </div>
     </section>
   </main>
 

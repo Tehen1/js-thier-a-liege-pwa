@@ -18,3 +18,4 @@ workbox-*.js
 venv/
 .venv/
 __pycache__/
+.vercel

@@ -1,4 +1,20 @@
 import { test, expect } from '@playwright/test';
+import type { Page } from '@playwright/test';
+import { execSync } from 'node:child_process';
+
+/**
+ * Capture une capture d'ecran puis la convertit en WebP (qualite 85).
+ * Garde le PNG source en reference.
+ */
+async function captureAndConvert(page: Page, pngPath: string, webpPath?: string, options?: { fullPage?: boolean }) {
+  const targetWebp = webpPath || pngPath.replace(/\.png$/, '.webp');
+  const screenshotOptions: { path: string; fullPage?: boolean } = { path: pngPath };
+  if (options?.fullPage !== undefined) {
+    screenshotOptions.fullPage = options.fullPage;
+  }
+  await page.screenshot(screenshotOptions);
+  execSync(`cwebp -q 85 "${pngPath}" -o "${targetWebp}"`, { stdio: 'pipe' });
+}
 
 test.describe('Accueil rendu SSR et contenu initial', () => {
   test('affiche le titre et les sections principales cote serveur', async ({ page }) => {
@@ -84,19 +100,19 @@ test.describe('PWA manifest et service worker', () => {
   });
 });
 
-test.describe('Captures visuelles reference produit', () => {
+test.describe('Captures visuelles reference produit (PNG + WebP)', () => {
   test('capture de la page daccueil complete', async ({ page }) => {
     await page.goto('/');
-    await page.screenshot({ path: 'tests/ui/screenshots/homepage.png', fullPage: true });
+    await captureAndConvert(page, 'tests/ui/screenshots/homepage.png', undefined, { fullPage: true });
   });
 
   test('capture de la section equipes', async ({ page }) => {
     await page.goto('/');
-    await page.locator('#equipes').screenshot({ path: 'tests/ui/screenshots/equipes.png' });
+    await captureAndConvert(page, 'tests/ui/screenshots/equipes.png');
   });
 
   test('capture de la section jeux', async ({ page }) => {
     await page.goto('/');
-    await page.locator('#jeu').screenshot({ path: 'tests/ui/screenshots/jeux.png' });
+    await captureAndConvert(page, 'tests/ui/screenshots/jeux.png');
   });
 });
