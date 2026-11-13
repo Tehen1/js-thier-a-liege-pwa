@@ -3,7 +3,9 @@ node_modules/
 .next/
 out/
 dist/
-sw.js
+# dist/ est déjà ignoré : le service worker source de public/ doit être versionné,
+# sinon la PWA ne peut jamais être déployée (le build ne l'émet pas tout seul).
+!public/sw.js
 workbox-*.js
 .astro/
 .vercel/
@@ -19,3 +21,4 @@ venv/
 .venv/
 __pycache__/
 .vercel
+.env*

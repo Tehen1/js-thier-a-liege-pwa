@@ -1,17 +1,31 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 
-const dist = new URL('../dist/', import.meta.url);
-const files = readdirSync(dist).filter((name) => /^sw(?:-[a-z0-9-]+)?\.js$/i.test(name));
-if (!files.includes('sw.js')) {
-  throw new Error('Missing generated service worker: dist/sw.js');
+const publicDir = new URL('../public/', import.meta.url);
+
+const distFiles = readdirSync(new URL('../dist/', import.meta.url))
+  .filter((name) => /^sw(?:-[a-z0-9-]+)?\.js$/i.test(name));
+const publicFiles = readdirSync(publicDir)
+  .filter((name) => /^sw\.js$/i.test(name));
+
+const swFiles = [...new Set([...distFiles, ...publicFiles])];
+if (!swFiles.includes('sw.js')) {
+  throw new Error('Missing service worker: dist/sw.js or public/sw.js');
 }
-if (!existsSync(new URL('manifest.webmanifest', dist))) {
-  throw new Error('Missing PWA manifest: dist/manifest.webmanifest');
-}
-for (const file of files) {
-  const source = readFileSync(new URL(file, dist), 'utf8');
-  if (/\b(?:from\s*|import\s*\(\s*|import\s*)[\x27\x22]@vite-pwa\//.test(source)) {
-    throw new Error(`Unresolved Workbox import in dist/${file}`);
+
+// Le service worker vanilla public/sw.js est activement utilisé
+// (le plugin @vite-pwa/astro a été retiré car son SW Workbox échouait
+// à s'évaluer sur le navigateur).
+if (existsSync(new URL('sw.js', publicDir))) {
+  const swSource = readFileSync(new URL('sw.js', publicDir), 'utf8');
+  // Ignore la séquence dans les commentaires (ex: "// Pas d'importScripts()").
+  const withoutComments = swSource.replace(/\/\/[^\n]*/g, '');
+  if (withoutComments.includes('importScripts')) {
+    throw new Error('public/sw.js should be vanilla (no importScripts)');
   }
 }
-console.log(`Verified PWA manifest and ${files.length} generated service worker file(s)`);
+
+// Vérification du manifest
+if (!existsSync(new URL('manifest.webmanifest', publicDir))) {
+  throw new Error('Missing PWA manifest: public/manifest.webmanifest');
+}
+console.log(`Verified PWA manifest and ${swFiles.length} service worker file(s)`);
